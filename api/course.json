@@ -1,0 +1,30 @@
+{
+    "course" : [
+        {
+            "id":1,
+            "name":"jiagnzy",
+            "courseName" : "钢琴",
+            "length" : "1.2h",
+            "price" : "50元",
+            "power" : "90"
+        },
+        {
+            "id":2,
+            "name":"jiagnzy",
+            "courseName" : "钢琴",
+            "length" : "1.2h",
+            "price" : "50元",
+            "power" : "90"
+        },
+        {
+            "id":3,
+            "name":"jiagnzy",
+            "courseName" : "钢琴",
+            "length" : "1.2h",
+            "price" : "50元",
+            "power" : "90"
+        }
+        
+        
+    ]
+}

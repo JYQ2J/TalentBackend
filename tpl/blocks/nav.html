@@ -1,0 +1,120 @@
+<!-- list -->
+<ul class="nav">
+  <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+    <span translate="aside.nav.HEADER">Navigation</span>
+  </li>
+  <li ui-sref-active="active">
+    <a ui-sref="app.user">
+      <i class="glyphicon icon-user icon text-info-lter"></i>
+      <span class="font-bold">用户管理</span>
+    </a>
+  </li>
+  <li ng-class="{active:$state.includes('app.talent')}">
+    <a href class="auto">
+      <span class="pull-right text-muted">
+        <i class="fa fa-fw fa-angle-right text"></i>
+        <i class="fa fa-fw fa-angle-down text-active"></i>
+      </span>
+      <i class="glyphicon glyphicon-magnet icon text-info-dker"></i>
+      <span class="font-bold">达人管理</span>
+    </a>
+    <ul class="nav nav-sub dk">
+      <li class="nav-sub-header">
+        <a href>
+          <span>达人管理</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.talent.tocheckList">
+          <span>待审核</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.talent.all">
+          <span>其他达人</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.talent.infochange">
+          <span>修改待审核</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+  <li ng-class="{active:$state.includes('app.course')}">
+    <a href class="auto">
+      <span class="pull-right text-muted">
+        <i class="fa fa-fw fa-angle-right text"></i>
+        <i class="fa fa-fw fa-angle-down text-active"></i>
+      </span>
+      <i class="glyphicon glyphicon-book icon text-info-dker"></i>
+      <span class="font-bold">课程管理</span>
+    </a>
+    <ul class="nav nav-sub dk">
+      <li class="nav-sub-header">
+        <a href>
+          <span>课程</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.course.recommend">
+          <span>推荐课</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.course.experience">
+          <span>体验课</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.course.normal">
+          <span>普通课</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.course.all">
+          <span>所有课程</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+  <li ui-sref-active="active">
+    <a ui-sref="app.ordermng">
+      <i class="glyphicon  glyphicon-list-alt icon text-info-dker"></i>
+      <span class="font-bold">订单管理</span>
+    </a>
+  </li>
+
+  <li ui-sref-active="active">
+    <a ui-sref="app.classification.list">
+      <i class="glyphicon glyphicon-edit icon text-info-dker"></i>
+      <span class="font-bold">设置分类</span>
+    </a>
+  </li>
+  <li ui-sref-active="active">
+    <a ui-sref="app.banner">
+      <i class="glyphicon glyphicon-edit icon text-info-dker"></i>
+      <span class="font-bold">设置横幅</span>
+    </a>
+  </li>
+  <li class="line dk hidden-folded"></li>
+  <li ui-sref-active="active">
+    <a href="http://mobile.umeng.com/apps" target="_blank">
+      <i class="glyphicon glyphicon-random icon text-info-dker"></i>
+      <span class="font-bold">友盟统计</span>
+    </a>
+  </li>
+  <li ui-sref-active="active">
+    <a href="https://kefu.easemob.com/mo/agent/chat" target="_blank">
+      <i class="glyphicon glyphicon-random icon text-info-dker"></i>
+      <span class="font-bold">环信客服</span>
+    </a>
+  </li>
+  <li ui-sref-active="active">
+    <a href="http://my.open.taobao.com/iframe.htm?spm=a219a.7395903.2.25.skzCSQ&code=top_iframe_push_notice&appkey=23325433&app_id=2384028&appKey=23325433" target="_blank">
+      <i class="glyphicon glyphicon-random icon text-info-dker"></i>
+      <span class="font-bold">百川推送</span>
+    </a>
+  </li>
+</ul>
+<!-- / list -->

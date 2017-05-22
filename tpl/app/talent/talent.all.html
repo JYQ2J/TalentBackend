@@ -1,0 +1,152 @@
+<div auth class="wrapper-md" ng-controller="TalentCtrl">
+  <toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+        达人信息 {{status}} 总数{{totalItems}} 每页最多{{itemsPerPage}}
+    </div>
+    <div class="row wrapper">
+        <div style="display: inline-block;margin:0px 5px;">
+            <label class="control-label">状态</label>
+            <select class="input-sm w-sm inline v-middle" ng-model ="stateSelected">
+                <option value="normal">已上架</option>
+                <option value="stop">已下架</option>
+                <option value="reject">被拒达人</option>
+            </select>
+        </div>
+        <div style="display: inline-block;margin:0px 5px;">
+            <label class="control-label">分类</label>
+            <select class="input-sm form-control w-sm inline v-middle" ng-model = "categorySelected"  ng-options="catalog.id as catalog.name for catalog in catalogs"></select>
+        </div>
+        <div style="display: inline-block;margin:0px 5px;">
+            <label class="control-label">时间</label>
+            <input type="text" ng-model="startTime" placeholder="例2015-01-12 00:00:00" class="input-sm form-control w-sm inline v-middle"/>
+        </div>
+        <div style="display: inline-block;margin:0px 5px;">
+            <label class="control-label">-</label>
+            <input type="text" ng-model="endTime" placeholder="例2015-01-12 00:00:00" class="input-sm form-control w-sm inline v-middle"/>
+        </div>
+        <div style="display: inline-block;margin:0px 5px;">
+            <label class="control-label"></label>
+            <input type="text" ng-model="nameSearch" class="input-sm form-control w inline v-middle" placeholder="姓名/电话" ng-keypress="enterKeyPress($event)"/>
+        </div>
+        <div style="display: inline-block;margin:0px 5px;">
+            <button class="btn btn-default" ng-click="search(1)">搜索</button>
+        </div>
+    </div>
+    
+    <div class="table-responsive">
+        <table class="table table-striped v-middle" id="dataTableCommonID">
+            <thead>
+                <tr>
+                    <th style="display: none">id</th>
+                    <th style="display: none">user_id</th>
+                    <th>头像</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>电话</th>
+                    <th>标签</th>
+                    <th>类别</th>
+                    <th>状态</th>
+                    <th>时间</th>
+                </tr>
+            </thead>
+            <tbody class="no-padder">
+              <tr ng-repeat ="master in masters">
+                <td style="display: none">{{master.id}}</td>
+                <td style="display: none">{{master.user_id}}</td>
+                <td><img src="{{master.image}}" style="width:33px;height:33px;border-radius:20%;margin: -4px 0px;" onerror="this.src='img/a0.jpg'"></td>
+                <td class="v-middle">{{master.name}}</td>
+                <td class="v-middle">{{master.sex}}</td>
+                <td class="v-middle">{{master.phone}}</td>
+                <td class="v-middle">{{master.tag}}</td>
+                <td class="v-middle">{{master.cata_name}}</td>
+                <td class="v-middle">{{master.state}}</td>
+                <td class="v-middle">{{master.time}}</td>
+              </tr>                      
+            </tbody>
+        </table>
+        
+        <div style="margin: 5px 10px;">     
+        <pagination total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" max-size="maxSize" class="pagination-sm m-t-sm m-b" boundary-links="true" ng-click="paginationClick()"></pagination>
+        </div>
+
+    </div>
+  </div>
+
+  <!-- aside right -->
+  <div class="app-aside-right pos-fix padder w-auto-xs bg-white b-l animated fadeInRight hide" id="infoChangePage" style="width: 500px;border: 1px solid #7266ba;overflow-y: auto">
+    <div class=" center" >
+      <div class="wrapper b-b b-t b-light m-b">
+        <div class="pull-right text-muted text-md" ui-toggle-class="show" target=".app-aside-right" ng-click="closeInfoChangePage()"><i class="icon-close"></i></div>
+        达人详情
+      </div>
+      <form class="form-horizontal" method="get">
+        <div class="form-group has-success" style="display: none;">
+          <label class="col-sm-2 control-label">ID</label>
+          <div class="col-sm-10">
+            <input type="text" disabled id="info-change-id" class="form-control">
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-2 control-label">姓名</label>
+          <div class="col-sm-10">
+            <input type="text" disabled id="info-change-name" class="form-control">
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-2 control-label">电话</label>
+          <div class="col-sm-10">
+            <input type="text" disabled id="info-change-phone" class="form-control">
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-2 control-label">标签</label>
+          <div class="col-sm-10">
+            <input type="text" id="info-change-tag" class="form-control">
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-2 control-label">分类</label>
+          <div class="col-sm-10">
+            <select id="info-change-cata_id" class="form-control"><option value="{{cata.id}}" ng-repeat="cata in catas">{{cata.name}}</option></select>
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-2 control-label">want分类</label>
+          <div class="col-sm-10">
+            <textarea type="text" disabled id="info-change-want_cata" class="form-control" oninput="this.style.height=this.scrollHeight + 'px'" style="overflow-y: hidden; height: 60px"></textarea>
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-2 control-label">简介</label>
+          <div class="col-sm-10">
+            <textarea type="text" id="info-change-resume" class="form-control" oninput="this.style.height=this.scrollHeight + 'px'" style="height: 150px"></textarea>
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-2 control-label">荣誉</label>
+          <div class="col-sm-10">
+            <textarea type="text" id="info-change-glory" class="form-control" oninput="this.style.height=this.scrollHeight + 'px'" style="height: 150px"></textarea>
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-2 control-label">状态</label>
+          <div class="col-sm-10">
+            <select id="info-change-state" class="form-control">
+                <option value="normal">上架</option>
+                <option value="stop">下架</option>
+                <option value="reject">被拒达人</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-10 col-sm-offset-2">
+            <button ng-click="closeInfoChangePage()" class="btn btn-default">Cancel</button>
+            <button ng-click="saveInfoChangePage()" class="btn btn-primary">保存修改</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- /aside right -->
+</div>

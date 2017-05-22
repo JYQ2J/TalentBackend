@@ -1,0 +1,238 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <title>创梦空间抽奖系统</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href="chuangmengkongjian.css" rel="stylesheet">
+    <!--<link href="lottory_style.css" rel="stylesheet">-->
+</head>
+
+<body>
+    <div class="content">
+        <div class="upper">
+            <img src="logo.png">
+            <div style="position:absolute;right:40px;color:white;font-size:40px;top:150px">炫舞之夜——创梦空间</div>
+        </div>
+        <div class="lower">
+            <div class="userArea">
+                <div class="userHeader">
+                    <span class="userIcon"></span>
+                    <label class="userInCollectionPool">收藏用户池人数</label><span></span>
+                </div>
+                <div class="user">
+                    <ul class="userList" id="userListAnimation"
+        style="height: 280px; overflow-y: hidden; overflow-x: hidden;">
+                        <!--<li><span class="userImg"><img src="userImg.png"></span><span class="userName">麦伊</span><span class="userTel">151创梦空间8006</span></li>
+                        <li><span class="userImg"><img src="userImg.png"></span><span class="userName">麦伊</span><span class="userTel">151创梦空间8006</span></li>
+                        <li><span class="userImg"><img src="userImg.png"></span><span class="userName">麦伊</span><span class="userTel">151创梦空间8006</span></li>
+                        <li><span class="userImg"><img src="userImg.png"></span><span class="userName">麦伊</span><span class="userTel">151创梦空间8006</span></li>
+                        <li><span class="userImg"><img src="userImg.png"></span><span class="userName">麦伊</span><span class="userTel">151创梦空间8006</span></li>
+                        <li><span class="userImg"><img src="userImg.png"></span><span class="userName">麦伊</span><span class="userTel">151创梦空间8006</span></li>
+                        <li><span class="userImg"><img src="userImg.png"></span><span class="userName">麦伊</span><span class="userTel">151创梦空间8006</span></li>
+                        <li><span class="userImg"><img src="userImg.png"></span><span class="userName">麦伊</span><span class="userTel">151创梦空间8006</span></li>
+                        <li><span class="userImg"><img src="userImg.png"></span><span class="userName">麦伊</span><span class="userTel">151创梦空间8006</span></li>-->
+                    </ul>
+                </div>
+
+            </div>
+            <div class="lotteryArea">
+                <div class="prizeHeader">
+                    <span class="prizeIcon"></span>
+                    <span class="prizeTitle">本次奖品</span>
+                </div>
+                <div class="prize">
+
+                    <ul class="prizeList">
+                        <li>
+                            <div class="imgWrapper"><img src="./img/ipad_mini.jpg"></div><span>一等奖</span><span>IPAD MINI 3</span></li>
+                        <!--<li>
+                            <div class="imgWrapper"><img src="prizeItem.png"></div><span>二等奖</span></li>
+                        <li>
+                            <div class="imgWrapper"><img src="prizeItem.png"></div><span>三等奖</span></li>-->
+                    </ul>
+                </div>
+                <div class="prizeBtn">
+                    <button onclick="gotoLottery()">开始抽奖
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/jquery.cookie/jquery.cookie.js"></script>
+    <script>
+        var url = "https://api.idarenhui.com";
+
+        /* 检查是否支持localStorage */
+        function checkLocalStorage() {
+            if (window.localStorage) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        /* 设置 localStorage */
+        function setLocalStorage(key, val) {
+            window.localStorage.setItem(key, val);
+        }
+
+        /* 获取 localStorage */
+        function getLocalStorage(key) {
+            return window.localStorage.getItem(key);
+        }
+
+        /* 移除 localStorage */
+        function rmLocalStorage(key) {
+            return window.localStorage.removeItem(key);
+        }
+
+        /* 显示 localStorage */
+        function showLocalStorage() {
+            var storage = window.localStorage;
+            for (var i = 0; i < storage.length; i++) {
+                //key(i)获得相应的键，再用getItem()方法获得对应的值
+                document.write(storage.key(i) + " : " + storage.getItem(storage.key(i)) + "<br>");
+            }
+        }
+
+        function login() {
+            var username = "18051017809";
+            var password = "hjj888";
+            var interface = "/v1.0/auth";
+            $.ajax({
+                type: "POST",
+                url: url + interface,
+                data: JSON.stringify({
+                    phone: username,
+                    password: password
+                }),
+
+            }).success(
+                function (data) {
+                    debugger
+                    $.cookie('access_token', data.access_token);
+                    getUserList(1);
+                });
+        }
+
+        var userList = [];
+
+//        function getUserList(page) {
+//            var user_token = $.cookie('access_token');
+//            var interface = "/v1.0/admin/users";
+//            $.ajax({
+//                type: "GET",
+//                url: url + interface + "?page=" + page,
+//                headers: {
+//                    access_token: user_token
+//                },
+//                success: function (data) {
+//                    debugger
+//                    console.log(data);
+//                    userList = userList.concat(data.users);
+//                    if (data.users.length == 10) {
+//                        getUserList(page + 1);
+//                    }
+//                    if (data.users.length < 10) {
+//                        console.log(userList);
+//                        if (checkLocalStorage()) {
+//                            setLocalStorage("userList", JSON.stringify(userList));
+//                            console.log(JSON.parse(getLocalStorage("userList")));
+//                            var usreList = JSON.parse(getLocalStorage("userList"));
+//                            initUserList(userList);
+//                            startmarquee(52, 20, 1500);   
+//                        }
+//                    }
+//                }
+//
+//            });
+//        }
+        
+          function getUserList() {
+            var user_token = $.cookie('access_token');
+              var class_id = 38;
+            var interface = "/v1.0/campaign/luck_draw";
+            $.ajax({
+                type: "GET",
+                url: url + interface + "?less_id="+class_id,
+                headers: {
+                    access_token: user_token
+                },
+                success: function (data) {
+                    debugger
+                    console.log(data);
+                    userList = userList.concat(data.users);
+                    
+                        console.log(userList);
+                        if (checkLocalStorage()) {
+                            setLocalStorage("userList", JSON.stringify(userList));
+                            console.log(JSON.parse(getLocalStorage("userList")));
+                            var usreList = JSON.parse(getLocalStorage("userList"));
+                            initUserList(userList);
+                            startmarquee(52, 20, 1500);   
+                        }
+                 
+                }
+
+            });
+        }
+        
+        function initUserList(userList){
+            var target = $('#userListAnimation');
+            var dom = "";
+            
+            for(var i = 0; i < userList.length; i++){
+                var liTemp = "<li><span class='userImg'><img src='"+userList[i].image+"'></span><span class='userName'>"+userList[i].nickname+"</span><span class='userTel'>"+userList[i].phone+"</span></li>";
+                dom+=liTemp;
+            }
+            
+            target.append(dom);
+        }
+
+        function gotoLottery() {
+            window.location.href = "./lottery.html";
+        }
+
+        function startmarquee(lh, speed, delay) {
+            var t;
+            var oHeight = 300; /** div的高度 **/ 　
+            var p = false;
+            var o = document.getElementById("userListAnimation");
+            var preTop = 0;
+            o.scrollTop = 0;
+
+            function start() {
+                t = setInterval(scrolling, speed);
+                o.scrollTop += 1;
+            }
+
+            function scrolling() {
+                if (o.scrollTop % lh != 0 && o.scrollTop % (o.scrollHeight - oHeight - 1) != 0) {
+                    preTop = o.scrollTop;
+                    o.scrollTop += 1;
+                    if (preTop >= o.scrollHeight || preTop == o.scrollTop) {
+                        o.scrollTop = 0;
+                    }
+                } else {
+                    clearInterval(t);
+                    setTimeout(start, delay);
+                }
+            }
+            setTimeout(start, delay);
+        }
+
+        login();
+        $('img').error(function(){ $(this).attr('src',"./userIcon.png")}); 
+//        window.onload=function(){
+//		/**startmarquee(一次滚动高度,速度,停留时间);**/　　
+//            startmarquee(52, 20, 1500);
+//        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+<div auth class="wrapper-md" ng-controller="TalentChangeinfoCtrl">
+  <toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+        信息修改审核 {{status}} 总数{{totalItems}} 每页最多{{itemsPerPage}}
+    </div>
+    <div class="row wrapper">
+    <div class="table-responsive">
+        <table class="table table-striped v-middle" id="dataTableCommonID">
+            <thead>
+                <tr>
+                    <th style="display: none">id</th>
+                    <th>真实姓名</th>
+                    <th>达人标签</th>
+                </tr>
+            </thead>
+            <tbody class="no-padder">
+              <tr ng-repeat ="master in masters">
+                <td style="display: none">{{master.id}}</td>
+                <td class="v-middle">{{master.name}}</td>
+                <td class="v-middle">{{master.tags}}</td>
+              </tr>                      
+            </tbody>
+        </table>
+        
+        <div style="margin: 5px 10px;">     
+        <pagination total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" max-size="maxSize" class="pagination-sm m-t-sm m-b" boundary-links="true" ng-click="paginationClick()"></pagination>
+        </div>
+
+    </div>
+  </div>
+
+  <!-- aside right -->
+  <div class="app-aside-right pos-fix padder w-auto-xs bg-white b-l animated fadeInRight hide" id="infoChangePage" style="width: 500px;border: 1px solid #7266ba;overflow-y: auto">
+    <div class=" center" >
+      <div class="wrapper b-b b-t b-light m-b">
+        <div class="pull-right text-muted text-md" ui-toggle-class="show" target=".app-aside-right" ng-click="closeInfoChangePage()"><i class="icon-close"></i></div>
+        修改详情
+      </div>
+      <form class="form-horizontal" method="get">
+        <div class="form-group has-success" style="display: none;">
+          <label class="col-sm-2 control-label">ID</label>
+          <div class="col-sm-10">
+            <input type="text" disabled id="info-change-id" class="form-control">
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-2 control-label">姓名</label>
+          <div class="col-sm-10">
+            <input type="text" disabled id="info-change-name" class="form-control">
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-2 control-label">标签</label>
+          <div class="col-sm-10">
+            <input type="text" id="info-change-tag" class="form-control">
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-2 control-label">简介</label>
+          <div class="col-sm-10">
+            <textarea type="text" id="info-change-resume" class="form-control" oninput="this.style.height=this.scrollHeight + 'px'" style="height: 150px"></textarea>
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-2 control-label">荣誉</label>
+          <div class="col-sm-10">
+            <textarea type="text" id="info-change-glory" class="form-control" oninput="this.style.height=this.scrollHeight + 'px'" style="height: 150px"></textarea>
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-2 control-label">证书</label>
+          <div class="col-sm-10">
+            <img src="{{image}}" style="width: 350px;" ng-repeat="image in images"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-10 col-sm-offset-2">
+            <button ng-click="closeInfoChangePage()" class="btn btn-default">Cancel</button>
+            <button class="btn btn-success" ng-click="decideYesNo(1)">同意</button>
+            <button class="btn btn-danger" ng-click="decideYesNo(0)">拒绝</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- /aside right -->
+</div>

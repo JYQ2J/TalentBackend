@@ -1,0 +1,226 @@
+<div auth class="wrapper-md" ng-controller="CourseRecommendCtrl">
+  <toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+        所有课程 {{status}} 总数{{numbers}} 每页最多{{capacity}}
+    </div>
+    <div class="row wrapper">
+        <div style="display: inline-block;margin:0px 5px;">
+            <label class="control-label">状态</label>
+            <select class="input-sm form-control w-sm inline v-middle" ng-model ="stateSelected">
+                <option value="all">所有</option>
+                <option value="on">上架</option>
+                <option value="off">下架</option>
+                <option value="delete">删除</option>
+            </select>
+        </div>
+        <div style="display: inline-block;margin:0px 5px;">
+            <label class="control-label">排序依据</label>
+            <select class="input-sm form-control w-sm inline v-middle" ng-model ="sortRuleSelected">
+                <option value="time">时间</option>
+                <option value="price">价格</option>
+                <option value="collection_count">收藏量</option>
+                <option value="order_processing_count">预约量</option>
+                <option value="success_count">成交量</option>
+                <option value="score">推荐值</option>
+            </select>
+        </div>
+        <div style="display: inline-block;margin:0px 5px;">
+            <label class="control-label">排序方式</label>
+            <select class="input-sm w-sm inline v-middle" ng-model ="sortWaySelected">
+                <option value="desc">降序</option>
+                <option value="asc">升序</option>
+            </select>
+        </div>
+        <div style="display: inline-block;margin:0px 5px;">
+            <label class="control-label"></label>
+            <input type="text" ng-model="nameSearch" class="input-sm form-control w inline v-middle" placeholder="达人/课程" ng-keypress="enterKeyPress($event)"/>
+        </div>
+        <div style="display: inline-block;margin:0px 5px;">
+            <button class="btn btn-default" ng-click="search(1)">搜索</button>
+        </div>
+    </div>
+    
+    <div class="table-responsive">
+        <table class="table table-striped" id="dataTableCommonID">
+            <thead>
+                <tr>
+                    <th style="display: none">id</th>
+                    <th style="">达人</th>
+                    <th style="">课程名</th>
+                    <th style="">价格</th>
+                    <th style="">推荐值</th>
+                    <th style="">收藏量</th>
+                    <th style="">预约量</th>
+                    <th style="">成交量</th>
+                    <th style="">体验课</th>
+                    <th style="">推荐课</th>
+                    <th style="">状态</th>
+                    <th style="">时间</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat ="courseItem in courses">
+                    <td style="display: none">{{courseItem.id}}</td>
+                    <td>{{courseItem.mast_name}}</td>
+                    <td>{{courseItem.less_name}}</td>
+                    <td>{{courseItem.price/100}}元</td>
+                    <td>{{courseItem.score}}</td>
+                    <td>{{courseItem.collection_count}}</td>
+                    <td>{{courseItem.order_processing_count}}</td>
+                    <td>{{courseItem.success_count}}</td>
+                    <td>{{courseItem.is_experience == 0?'否':'是'}}</td>
+                    <td>{{courseItem.is_recommend == 0?'否':'是'}}</td>
+                    <td>{{courseItem.state}}</td>
+                    <td>{{courseItem.time}}</td>
+                </tr>                        
+            </tbody>
+        </table>
+                      
+        <nav>
+        <ul class="pagination">
+          <li><a>当前页<span style="color: red">{{currentPage}}</span></a></li>
+          <li><a>总页数{{totalPage}}</a></li>
+        </ul>
+        <ul class="pagination" id="page_navigation">
+          <li>
+            <a aria-label="Previous">
+              <span aria-hidden="true">prev</span>
+            </a>
+          </li>
+          <li ng-repeat="page in displayNum"><a class="current">{{page}}</a></li>
+          <li>
+            <a aria-label="Next">
+              <span aria-hidden="true">next</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+    </div>
+  </div>
+
+  <!-- aside right -->
+  <div class="app-aside-right pos-fix padder w-auto-xs bg-white b-l animated fadeInRight hide" id="infoChangePage" style="width: 500px; overflow-y: auto">
+    <div class=" center" >
+      <div class="wrapper b-b b-t b-light m-b">
+        <div class="pull-right text-muted text-md" ui-toggle-class="show" target=".app-aside-right" ng-click="closeInfoChangePage()"><i class="icon-close"></i></div>
+        详细信息
+      </div>
+
+      <form class="form-horizontal" method="get">
+        <div class="form-group has-success" style="display: none;">
+          <label class="col-sm-2 control-label">ID</label>
+          <div class="col-sm-10">
+            <input type="text" disabled id="info-change-id" class="form-control">
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-2 control-label">达人</label>
+          <div class="col-sm-10">
+            <input type="text" disabled id="info-change-mast_name" class="form-control">
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-2 control-label">课程名</label>
+          <div class="col-sm-10">
+            <input type="text" disabled id="info-change-less_name" class="form-control">
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-2 control-label">时长</label>
+          <div class="col-sm-10">
+            <input type="text" disabled id="info-change-keeptime" class="form-control">
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-2 control-label">价格</label>
+          <div class="col-sm-10">
+            <input type="text" disabled id="info-change-price" class="form-control">
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-2 control-label">推荐值</label>
+          <div class="col-sm-10">
+            <input type="text" id="info-change-score" class="form-control">
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-2 control-label">分类</label>
+          <div class="col-sm-10">
+            <select id="info-change-cata_id" disabled class="form-control"><option value="{{cata.id}}" ng-repeat="cata in catas">{{cata.name}}</option></select>
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-2 control-label">状态</label>
+          <div class="col-sm-10">
+            <select id="info-change-state" disabled class="form-control">
+                <option value="on">上架</option>
+                <option value="off">下架</option>
+                <option value="delete">删除</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-2 control-label">收藏量</label>
+          <div class="col-sm-10">
+            <input type="text" disabled id="info-change-collection_count" class="form-control">
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-2 control-label">预约量</label>
+          <div class="col-sm-10">
+            <input type="text" disabled id="info-change-order_processing_count" class="form-control">
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-2 control-label">交易量</label>
+          <div class="col-sm-10">
+            <input type="text" disabled id="info-change-success_count" class="form-control">
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-2 control-label">时间</label>
+          <div class="col-sm-10">
+            <input type="text" disabled id="info-change-time" class="form-control">
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-2 control-label">推荐课？</label>
+          <div class="col-sm-10">
+            <input type="text" disabled id="info-change-is_recommend" class="form-control">
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-2 control-label">体验课？</label>
+          <div class="col-sm-10">
+            <input type="text" disabled id="info-change-is_experience" class="form-control">
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-2 control-label">课程描述</label>
+          <div class="col-sm-10">
+            <textarea type="text" disabled id="info-change-description" class="form-control" oninput="this.style.height=this.scrollHeight + 'px'" style="height: 150px"></textarea>
+          </div>
+        </div>
+          <div class="form-group">
+              <div class="col-sm-3 col-sm-offset-2">
+                  <button ui-sref="app.collected" ng-click="showCollection" class="btn btn-primary">查看收藏用户</button>
+              </div>
+              <div class="col-sm-2 col-sm-offset-1">
+                  <button ng-click="deleteRecommend()" class="btn btn-danger">删除推荐</button>
+              </div>
+          </div>
+          <div class="form-group">
+              <div class="col-sm-4 col-sm-offset-2">
+                  <button ng-click="saveInfoChangePage()" class="btn btn-primary">保存修改</button>
+              </div>
+              <div class="col-sm-4">
+                  <button ng-click="closeInfoChangePage()" class="btn btn-default">Cancel</button>
+              </div>
+          </div>
+      </form>
+    </div>
+  </div>
+  <!-- /aside right -->
+</div>

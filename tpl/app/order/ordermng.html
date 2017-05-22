@@ -1,0 +1,179 @@
+<div auth class="wrapper-md" ng-controller="OrderCtrl">
+  <toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+        达人信息 {{status}} 总数{{totalItems}} 每页最多{{itemsPerPage}}
+    </div>
+    <div class="row wrapper">
+        <div style="display: inline-block;margin:0px 5px;">
+            <label class="control-label">状态</label>
+            <select class="input-sm w-sm inline v-middle" ng-model ="stateSelected">
+                <option value="999">所有</option>
+                <option value="-1">退款</option>
+                <option value="0">取消</option>
+                <option value="1">待确认</option>
+                <option value="2">已预约</option>
+                <option value="3">已付款</option>
+                <option value="4">已完成</option>
+            </select>
+        </div>
+        <div style="display: inline-block;margin: 0px 5px;">
+            <label class="control-label">归档情况</label>
+            <select class="input-sm w-sm inline v-middle" ng-model ="archivedSelected">
+                <option value="2">全部</option>
+                <option value="1">已归档</option>
+                <option value="0">未归档</option>
+            </select>
+        </div>
+
+        <div style="display: inline-block;margin:0px 5px;">
+            <label class="control-label">时间</label>
+            <input type="text" ng-model="startTime" placeholder="例2015-01-12 00:00:00" class="input-sm form-control w-sm inline v-middle"/>
+        </div>
+        <div style="display: inline-block;margin:0px 5px;">
+            <label class="control-label">-</label>
+            <input type="text" ng-model="endTime" placeholder="例2015-01-12 00:00:00" class="input-sm form-control w-sm inline v-middle"/>
+        </div>
+        <div style="display: inline-block;margin:0px 5px;">
+            <label class="control-label"></label>
+            <input type="text" ng-model="nameSearch" class="input-sm form-control w inline v-middle" placeholder="姓名/课程名" ng-keypress="enterKeyPress($event)"/>
+        </div>
+        <div style="display: inline-block;margin:0px 5px;">
+            <label class="control-label">排序</label>
+            <select class="input-sm w-sm inline v-middle" ng-model ="orderBy">
+                <option value="time">时间</option>
+                <option value="lesson">课程</option>
+            </select>
+        </div>
+        <div style="display: inline-block;margin:0px 5px;">
+            <button class="btn btn-default" ng-click="search(1)">搜索</button>
+        </div>
+    </div>
+    
+    <div class="table-responsive">
+        <table class="table table-striped v-middle" id="dataTableCommonID">
+            <thead>
+                <tr>
+                    <th style="display: none">id</th>
+                    <th>课程名</th>
+                    <th>达人姓名</th>
+                    <th>达人电话</th>
+                    <th>价格</th>
+                    <th>买家姓名</th>
+                    <th>买家电话</th>
+                    <th>状态</th>
+                    <th>相应的时间</th>
+                    <th>归档情况</th>
+                </tr>
+            </thead>
+            <tbody class="no-padder">
+              <tr ng-repeat ="order in orders">
+                <td style="display: none">{{order.id}}</td>
+                <td class="v-middle">{{order.less_name}}</td>
+                <td class="v-middle">{{order.mast_name}}</td>
+                <td class="v-middle">{{order.mast_phone}}</td>
+                <td class="v-middle">{{order.less_price / 100}}</td>
+                <td class="v-middle">{{order.name}}</td>
+                <td class="v-middle">{{order.phone}}</td>
+                <td class="v-middle">{{transState(order.state)}}</td>
+                <td class="v-middle">{{showRightTime(order)}}</td>
+                <td class="v-middle">{{showArchived(order.archived)}}</td>
+              </tr>                      
+            </tbody>
+        </table>
+        
+        <div style="margin: 5px 10px;">     
+        <pagination total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" max-size="maxSize" class="pagination-sm m-t-sm m-b" boundary-links="true" ng-click="paginationClick()"></pagination>
+        </div>
+
+    </div>
+  </div>
+
+  <!-- aside right -->
+  <div class="app-aside-right pos-fix padder w-auto-xs bg-white b-l animated fadeInRight hide" id="infoChangePage" style="width: 310px;overflow-y: auto;border: 1px solid #7266ba;">
+    <div class=" center" >
+      <div class="wrapper b-b b-t b-light m-b">
+        <div class="pull-right text-muted text-md" ui-toggle-class="show" target=".app-aside-right" ng-click="closeInfoChangePage()"><i class="icon-close"></i></div>
+        时间详情
+      </div>
+      <form class="form-horizontal" method="get">
+          <div class="form-group has-success" style="display: none">
+              <label class="col-sm-3 control-label">ID</label>
+              <div class="col-sm-8">
+                  <input type="text" disabled id="info-change-id" class="form-control">
+              </div>
+          </div>
+        <div class="form-group has-success">
+          <label class="col-sm-3 control-label">姓名</label>
+          <div class="col-sm-7">
+            <input type="text" disabled id="info-change-name" class="form-control">
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-3 control-label">待确认</label>
+          <div class="col-sm-7">
+            <input type="text" disabled id="info-change-time" class="form-control">
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-3 control-label">已预约</label>
+          <div class="col-sm-7">
+            <input type="text" disabled id="info-change-confirm_time" class="form-control">
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-3 control-label">已付款</label>
+          <div class="col-sm-7">
+            <input type="text" disabled id="info-change-pay_time" class="form-control">
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-3 control-label">已完成</label>
+          <div class="col-sm-7">
+            <input type="text" disabled id="info-change-finish_time" class="form-control">
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-3 control-label">退款</label>
+          <div class="col-sm-7">
+            <input type="text" disabled id="info-change-refund_time" class="form-control">
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-3 control-label">取消</label>
+          <div class="col-sm-7">
+            <input type="text" disabled id="info-change-cancel_time" class="form-control">
+          </div>
+        </div>
+        <div class="form-group has-success">
+          <label class="col-sm-3 control-label">备注</label>
+          <div class="col-sm-7">
+            <textarea type="text" style="height: 110px" disabled id="info-change-cancel_remark" class="form-control"></textarea> 
+          </div>
+        </div>
+          <div class="form-group has-success">
+              <label class="col-sm-3 control-label">归档</label>
+              <div class="col-sm-7">
+                  <select disabled id="info-change-archived" class="form-control">
+                      <option value="2">全部</option>
+                      <option value="1">已归档</option>
+                      <option value="0">未归档</option>
+                  </select>
+              </div>
+          </div>
+        <div class="form-group">
+            <div class="col-sm-3 col-sm-offset-0">
+                <button ng-click="setArchived('is_archived')" class="btn btn-info">设为归档</button>
+            </div>
+            <div class="col-sm-3 col-sm-offset-1">
+                <button ng-click="setUnArchived('is_unarchived')" class="btn btn-info">取消归档</button>
+            </div>
+          <div class="col-sm-3 col-sm-offset-1">
+            <button ng-click="closeInfoChangePage()" class="btn btn-default">Cancel</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- /aside right -->
+</div>

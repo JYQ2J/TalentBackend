@@ -1,0 +1,198 @@
+html,
+body {
+    /*overflow: hidden;*/
+    /*height: 100%;*/
+    font-family: Microsoft YaHei !important;
+}
+
+body {
+    background: #E9E9E9 url(img/bg.jpg) 50% 0;
+    -webkit-animation: flow 16s ease-in-out infinite;
+    -moz-animation: flow 16s linear infinite;
+    animation: flow 16s linear infinite;
+}
+
+.upper {
+    background-color: #7fcef4;
+    min-height: 360px;
+}
+
+.lower {
+    background-color: #473636;
+    min-height: 300px;
+    padding: 30px 30px;
+}
+
+.content {
+    width: auto;
+    border: 1px solid #000;
+    text-align: left;
+    min-width: 776px;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    background-color: #CCCCCC;
+    font-size: 12px;
+    line-height: 18px;
+}
+
+.prizeList li {
+/*    display: inline-block;*/
+    display: block;
+    font-size: 18px;
+/*    margin-right: 18px;*/
+}
+
+.prizeList li .imgWrapper {
+    background-color: white;
+    border-radius:14px;
+    min-width: 100px;
+    min-height: 100px;
+}
+
+.prizeList li .imgWrapper img {
+/*
+    position: relative;
+    left: 20px;
+    top: 20px;
+*/
+    
+    width: 220px;
+    margin-left: 73px;
+/*    height: 100px;*/
+}
+
+.prizeList li span {
+    color: white;
+    margin-left: 67px;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.lotteryArea {
+    /*width: 40%;
+    float: right;*/
+    position: absolute;
+    right: 20px;
+    padding-left: 20px;
+}
+
+.userArea {
+    width: 55%;
+    float: left;
+    padding-right: 0px;
+}
+
+.prizeBtn button {
+    background: #7fcef4;
+    color: white;
+    min-width: 350px;
+    display: inline-block;
+    border: none;
+    border-radius: 12px;
+    min-height: 70px;
+    font-size: 30px;
+    font-family: Microsoft YaHei;
+    margin-top: 30px;
+}
+
+.userInCollectionPool {
+    color: white;
+    font: 20px;
+    line-height: 24px;
+}
+
+.userIcon {
+    background: url("userIcon.png");
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    position: relative;
+    top: 3px;
+}
+
+.prizeIcon {
+    display: inline-block;
+    background: url(prize.png);
+    width: 20px;
+    height: 20px;
+    background-size: 96%;
+}
+
+.prizeTitle {
+    color: white;
+    font-size: 20px;
+}
+
+.userList {
+    border-top: 1px solid white;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    text-indent: 0
+}
+
+.userList li {
+    display: block;
+    border-bottom: 1px solid white;
+    min-height: 30px;
+    line-height: 30px;
+    color: white;
+}
+
+.userList li img {
+    position: relative;
+    top: 10px;
+    left: 10px;
+}
+
+.userList li .userName {
+    margin-left: 30px;
+    max-width: 120px;
+    display: inline-block;
+    min-width: 120px;
+    font-size: 18px;
+}
+
+.userList li .userTel {
+    margin-left: 50px;
+    font-size: 20px;
+}
+
+.userHeader {
+    padding-bottom: 20px;
+    font-size: 20px
+}
+
+.userImg img{
+    width: 40px;
+    height: 40px;
+}
+.prizeList {
+    min-width: 360px;
+    padding: 0 0;
+    margin-top: 19px;
+}
+.formArea {
+    width:100%;
+    text-align: center;
+}
+
+.formArea label{
+    color:white;
+    font-size: 26px;
+    padding-right: 40px;
+}
+
+.formArea input{
+    font-size: 26px;
+}
+
+
+.formItem{
+    height: 30px;
+    margin-bottom: 10px;
+}

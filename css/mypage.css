@@ -1,0 +1,36 @@
+body{
+	/*font-family: "微软雅黑";*/
+}
+#logoImg:hover{
+	animation: shake 0.2s linear 0s infinite alternate;
+	/* Firefox: */
+	-moz-animation: shake 0.2s linear 0s infinite alternate;
+	/* Safari 和 Chrome: */
+	-webkit-animation: shake 0.2s linear 0s infinite alternate;
+	/* Opera: */
+	-o-animation: shake 0.2s linear 0s infinite alternate;
+}
+@keyframes shake
+{
+from {transform: rotate(-40deg);}
+to {transform: rotate(40deg);}
+}
+
+@-moz-keyframes shake /* Firefox */
+{
+from {-moz-transform: rotate(-40deg);}
+to {-moz-transform: rotate(40deg);}
+}
+
+@-webkit-keyframes shake /* Safari 和 Chrome */
+{
+from {-webkit-transform: rotate(-40deg);}
+to {-webkit-transform: rotate(40deg);}
+}
+
+@-o-keyframes shake /* Opera */
+{
+from {-o-transform: rotate(-40deg);}
+to {-o-transform: rotate(40deg);}
+}
+

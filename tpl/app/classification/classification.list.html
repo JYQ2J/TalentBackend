@@ -1,0 +1,39 @@
+<div class="hbox hbox-auto-xs hbox-auto-sm" ng-controller="ClassificationCtrl">
+  <!-- main -->
+  <div class="col wrapper-lg">
+    <h3 class="font-thin m-t-n-xs m-b">类别列表</h3>
+
+    <div class="row row-sm">
+      <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2-4"  ng-repeat= "item in catalogs">
+        <div class="item" style="text-align: center;">
+          <div class="pos-rlt">
+            <div class="item-overlay bg-black-opacity r r-2x r r-2x" ng-click="clickImg({{item.id}})"></div>
+            <a>
+              <img src="{{item.icon}}" id="img{{item.id}}" class="r-2x" onerror="this.src='img/p0.jpg'" style="height: 120px;" />
+            </a>
+            <input type="file" id="fileInput{{item.id}}" style="display: none;"/>
+          </div>
+          <div>
+            <input type="text" class="name{{item.id}}" value="{{item.name}}" style="padding:2px;text-align: center;border: none;background-color: transparent" oninput="nameChange(this)"/>          
+          </div>
+          <div style="padding-bottom: 15px"> 
+              <button class="btn btn-sm btn-default" id="deleBt{{item.id}}" ng-click="deleChange({{item.id}})">删除</button> 
+              <button class="btn btn-sm btn-success" id="uploadBt{{item.id}}" style="display: none;" ng-click="upload({{item.id}})">上传</button> 
+              <button class="btn btn-sm btn-success" id="saveBt{{item.id}}" style="display: none;" ng-click="saveChange({{item.id}})">保存</button>         
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- / main -->
+  <!-- right col -->
+  <div class="col w-md bg-light dker b-l bg-auto no-border-xs">    
+    <div class="wrapper-md">      
+      <div class="m-b-sm text-md">分类操作</div>
+
+      <button class="btn btn-lm btn-danger" ng-click="addClasification()">添加分类</button>
+    </div>
+  </div>
+  <!-- / right col -->
+</div>

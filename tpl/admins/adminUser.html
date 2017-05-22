@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>表格</title>
+    <meta name="keywords" content="侧边导航菜单(可分组折叠)">
+    <meta name="description" content="侧边导航菜单(可分组折叠)" />
+    <meta name="HandheldFriendly" content="True" />
+    <!-- Bootstrap3.3.5 CSS -->
+    <link href="../../css/bootstrap.css" rel="stylesheet">
+    <link href="../../css/titatoggle-dist.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <style>
+        body {
+            font-size: small;
+            background: #efefef;
+            font-family: "Microsoft YaHei UI";
+        }
+        a{
+            color: #6792a9;
+            cursor: pointer;
+        }
+        a:hover,
+        a:focus {
+            color: #2d4658;
+            text-decoration: none;
+        }
+        textarea{vertical-align:top}
+        select{width: 13.8em; border-radius: 3px; height: 1.8em;}
+        h3{font-size: large;}
+        h4{font-size: medium}
+        ul{padding:0;margin:0;}
+        li{list-style-type:none;}
+        img{vertical-align: top;}
+        table p{margin: 0.2em;}
+        table td span{cursor: pointer; font-size: large; vertical-align: top;}
+        table th span{cursor: pointer; font-size: small; vertical-align: middle;}
+
+        .circle {
+            margin-left: 1em;
+            width: 1.5em;
+            height: 1.5em;
+            background: red;
+            border-radius: 50%;
+        }
+        .pagination span{color:#666}
+        .row{background: #efefef;}
+        .border-all{border:1px solid #bbbbbb;}
+        .inline p{display: inline;}
+        .inline p{display: inline; margin-right: 1em;}
+
+        .navbar{background: #6792a9; height: 6em; padding-top: 2em; padding-left: 3em; border-radius: 0em;}
+        .navbar a{color: white; margin-right: 4em;}
+        .navbar a:hover,
+        .navbar a:focus {
+            color: #2d4658;
+            text-decoration: none;
+        }
+
+        .panel-group{background: #efefef; width: auto;  padding-top: 2em; min-height: 38em;}
+        .leftMenu{background: #efefef; margin-top:1em;}
+        .leftMenu .panel-heading{background: white; text-align: center; width:7em; margin-top:0.8em; line-height:0.8em;position:relative;border:1px solid #bbbbbb;}
+
+
+        .searchBar{background: #6792a9; height: 3.2em; padding-left: 47%; padding-top: 0.7em;}
+        .searchBar span{cursor: pointer; color: white; font-size: larger; vertical-align: middle;}
+
+        .content-body{margin-top: 0.5em;}
+        .content-body table td{background: white; text-align: center;}
+        .content-body table th{background: white; text-align: center;}
+
+        .userCard-margin{margin-top: 3.8em;}
+        .userCard{background: white; border: 1px solid #bbbbbb; margin-bottom: 1em; width: 18em; height: auto; overflow:hidden;}
+        .userCardP{background: white; padding-top: 2.5em; padding-bottom: 1em; text-align:center}
+        .userCardP1{margin-top: 1em;}
+        .userCardP1 p{margin: 0;}
+        .userCardP2{margin-top: 0.6em;}
+        .userCardP2 p{margin-bottom: 0.2em; color: #bbbbbb; font-size: smaller;}
+        .userCardCount{background: #efefef}
+        .userCardCount table{margin: 0;}
+        .userCardCount table tr{border: 0 solid #bbbbbb; text-align: center;}
+        .cardHeading{padding: 0.25em 1em; border-bottom: 1px solid #efefef;}
+        .cardHeading3{padding: 1em 1em; border-bottom: 1px solid #efefef;}
+        .cardContent{padding: 1em 1em;}
+        .cardContent button{width: 100%; background-color: transparent; border: 1px solid #bbbbbb; border-radius: 6px; margin-top: 0.5em; padding: 0.5em 0em;}
+
+        .form-group textarea{width: 30em;}
+        .form-inline button{background-color: white; border: 1px solid #6792a9; padding: 0.2em 1.2em;}
+        .form-title{margin-left: 0.5em; margin-right: 0.5em;}
+        .form-control{height: 1.8em;}
+        .content-bottom button{padding: 0.5em 3em; margin-left: 5em;}
+    </style>
+</head>
+<body>
+<div class="container" ng-app="User" ng-controller="UserCtrl">
+    <div class="row">
+        <div class="navbar">
+            <a><img src="../../img/">&nbsp;&nbsp;达人荟</a>
+            <a>用户管理</a>
+            <a>动态管理</a>
+            <a>通知</a>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-1 panel-group">
+            <ul class="panel leftMenu">
+                <li class="panel-heading">
+                    <a ui-sref="">
+                        达人管理
+                    </a>
+                </li>
+
+                <li class="panel-heading">
+                    <a ui-sref="">
+                        用户管理
+                    </a>
+                </li>
+
+                <li class="panel-heading">
+                    <a ui-sref="">
+                        达人申请
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!------------------------------------------------leftMenu end-------------------------------------------------->
+
+        <div class="col-md-8">
+            <div class="searchBar">
+                <div class="form-inline">
+                    <input style="width: 25em;" class="form-title form-control" placeholder="请输入达人姓名或达人编号">
+                    <span class="glyphicon glyphicon-search"></span>
+                </div>
+            </div>
+            <div class="content-body">
+                <table class="table" id="dataTableCommonID">
+                    <thead>
+                    <tr class="border-all">
+                        <th style="">编号</th>
+                        <th style="">头像</th>
+                        <th style="">姓名</th>
+                        <th style="">个人简介</th>
+                        <th style="">注册时间</th>
+                        <th style="">关注量 <span class="glyphicon glyphicon-sort-by-order-alt"></span></th>
+                        <th style="">点赞量 <span class="glyphicon glyphicon-sort-by-order-alt"></span></th>
+                        <th style="">评论量 <span class="glyphicon glyphicon-sort-by-order-alt"></span></th>
+                        <th style="">身份审核</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="border-all" ng-repeat ="courseItem in courses">
+                        <td style="display: none">{{courseItem.is_recommend == 0?'否':'是'}}{{courseItem.id}}元</td>
+                        <td style="vertical-align: middle">001</td>
+                        <td><img class="img-circle" style="width: 3em; height: 3em;" src="../../img/photoDm.png"></td>
+                        <td style="vertical-align: middle">聂刚柔</td>
+                        <td style="vertical-align: middle">东南大学健身协会队长</td>
+                        <td style="vertical-align: middle">2017-01-02 18:30</td>
+                        <td style="vertical-align: middle">999</td>
+                        <td style="vertical-align: middle">999</td>
+                        <td style="vertical-align: middle">999</td>
+                        <td style="vertical-align: middle"><div class="circle"></div></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <nav>
+                    <ul class="pagination">
+                        <li><a><span>当前页{{currentPage}}</span></a></li>
+                        <li><a><span>总页数{{totalPage}}</span></a></li>
+                    </ul>
+                    <ul class="pagination" id="page_navigation">
+                        <li>
+                            <a aria-label="Previous">
+                                <span aria-hidden="true">上一页</span>
+                            </a>
+                        </li>
+                        <li ng-repeat="page in displayNum"><a class="current"><span>{{page}}</span></a></li>
+                        <li>
+                            <a aria-label="Next">
+                                <span aria-hidden="true">下一页</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <div class="col-md-2 userCard-margin">
+
+            <div class="userCard">
+                <div class="userCardP">
+                    <img class="img-circle" style=" width: 8em; height: 8em;" src="../../img/photoDm.png">
+                    <div class="userCardP1">
+                        <p>聂刚柔</p>
+                    </div>
+                    <div class="userCardP2">
+                        <p>东南大学健身协会会长</p>
+                        <p>在校本科生 | 东南大学九龙湖校区</p>
+                    </div>
+                </div>
+                <div class="userCardCount">
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <td style="">被点赞量</td>
+                            <td style="">被评论量</td>
+                            <td style="">被关注量</td>
+                        </tr>
+                        <tr style="font-size: large;" ng-repeat ="courseItem in courses">
+                            <td style="display: none">{{courseItem.is_recommend == 0?'否':'是'}}{{courseItem.id}}元</td>
+                            <td>999</td>
+                            <td>999</td>
+                            <td>999</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="userCard">
+                <div class="cardHeading3 inline">
+                    <p>信息通过审核</p>
+                    <p style="text-align: right; float:right;">通过</p>
+                </div>
+                <div class="cardContent">
+                    <p>发送通知</p>
+                    <textarea class="form-control" style="min-height: 10em;"></textarea>
+                    <button>确认发送</button>
+                    <div class="userCardP2 inline">
+                        <p>噼里啪啦一大堆...</p>
+                        <p>2017-01-02</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="userCard">
+                <div class="cardHeading3 inline">
+                    <p>关注他的人</p>
+                    <p>23</p>
+                </div>
+                <div class="cardContent">
+                    <table>
+                        <tbody>
+                        <tr ng-repeat ="courseItem in courses">
+                            <td style="display: none">{{courseItem.is_recommend == 0?'否':'是'}}{{courseItem.id}}元</td>
+                            <td><img src="../../img/photoDm.png" class="img-circle" style="width: 4em; height: 4em;"></td>
+                            <td style="padding-left: 1em;">
+                                <p>聂刚柔</p>
+                                <p style="color: #bbbbbb; font-size: smaller;">东南大学健身协会会长</p>
+                            </td>
+                            <td><span class="glyphicon glyphicon-search"></span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- jQuery1.11.3 (necessary for Bo otstrap's JavaScript plugins) -->
+<script src="../../vendor/jquery/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="../../vendor/jquery/bootstrap.js"></script>
+</body>
+
+
+</html>

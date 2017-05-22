@@ -1,0 +1,60 @@
+<div auth class="wrapper-md" ng-controller="CollectedCtrl">
+    <toaster-container toaster-options="{'position-class': 'toast-top-right', 'close-button':true}"></toaster-container>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            所有课程 {{status}} 总数{{numbers}} 每页最多{{capacity}}
+        </div>
+        <div class="row wrapper">
+            <div style="display: inline-block;margin:0px 5px;">
+                <label class="control-label"></label>
+                <input type="text" ng-model="lessonID" class="input-sm form-control w inline v-middle" placeholder="课程ID" ng-keypress="enterKeyPress($event)"/>
+            </div>
+            <div style="display: inline-block;margin:0px 5px;">
+                <button class="btn btn-default" ng-click="search(1)">搜索</button>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped" id="dataTableCommonID">
+                <thead>
+                <tr>
+                    <th style="">用户ID</th>
+                    <th style="">用户手机</th>
+                    <th style="">用户姓名</th>
+                    <th style="">用户昵称</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat ="user in users">
+                    <td style="">{{user.user_id}}</td>
+                    <td>{{user.phone}}</td>
+                    <td>{{user.name}}</td>
+                    <td>{{user.nickname}}</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <nav>
+                <ul class="pagination">
+                    <li><a>当前页<span style="color: red">{{currentPage}}</span></a></li>
+                    <li><a>总页数{{totalPage}}</a></li>
+                </ul>
+                <ul class="pagination" id="page_navigation">
+                    <li>
+                        <a aria-label="Previous">
+                            <span aria-hidden="true">prev</span>
+                        </a>
+                    </li>
+                    <li ng-repeat="page in displayNum"><a class="current">{{page}}</a></li>
+                    <li>
+                        <a aria-label="Next">
+                            <span aria-hidden="true">next</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+
+</div>
